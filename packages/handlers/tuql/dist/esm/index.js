@@ -13,11 +13,9 @@ export default class TuqlHandler {
             : buildSchemaFromDatabase(path.isAbsolute(this.config.db)
                 ? this.config.infile
                 : path.join(this.baseDir, this.config.db)));
-        // console.log("schema", schema)
-        // console.log("contextVariables", contextVariables)
         return {
             schema,
-            contextVariables
+            contextVariables,
         };
     }
 }

@@ -1,13 +1,13 @@
 {
   "name": "@graphql-mesh/cache-cfw-kv",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "sideEffects": false,
   "peerDependencies": {
     "graphql": "*"
   },
   "dependencies": {
-    "@graphql-mesh/types": "0.90.0",
-    "@graphql-mesh/utils": "0.43.7",
+    "@graphql-mesh/types": "0.91.0",
+    "@graphql-mesh/utils": "0.43.8",
     "tslib": "^2.4.0"
   },
   "repository": {

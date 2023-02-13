@@ -15,11 +15,9 @@ class TuqlHandler {
             : (0, tuql_1.buildSchemaFromDatabase)(cross_helpers_1.path.isAbsolute(this.config.db)
                 ? this.config.infile
                 : cross_helpers_1.path.join(this.baseDir, this.config.db)));
-        // console.log("schema", schema)
-        // console.log("contextVariables", contextVariables)
         return {
             schema,
-            contextVariables
+            contextVariables,
         };
     }
 }

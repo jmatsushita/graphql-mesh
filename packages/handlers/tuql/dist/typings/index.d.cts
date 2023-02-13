@@ -1,4 +1,4 @@
-import { MeshHandlerOptions, MeshHandler, MeshSource, YamlConfig } from '@graphql-mesh/types';
+import { MeshHandler, MeshHandlerOptions, MeshSource, YamlConfig } from '@graphql-mesh/types';
 export default class TuqlHandler implements MeshHandler {
     private config;
     private baseDir;

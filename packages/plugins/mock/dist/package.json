@@ -1,15 +1,15 @@
 {
   "name": "@graphql-mesh/plugin-mock",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "sideEffects": false,
   "peerDependencies": {
     "graphql": "*"
   },
   "dependencies": {
-    "@graphql-mesh/cross-helpers": "0.3.1",
+    "@graphql-mesh/cross-helpers": "0.3.2",
     "@graphql-mesh/string-interpolation": "0.4.2",
-    "@graphql-mesh/types": "0.90.0",
-    "@graphql-mesh/utils": "0.43.7",
+    "@graphql-mesh/types": "0.91.0",
+    "@graphql-mesh/utils": "0.43.8",
     "@graphql-tools/mock": "8.7.18",
     "@graphql-tools/schema": "9.0.16",
     "@graphql-tools/utils": "9.2.1",

@@ -1,13 +1,13 @@
 {
   "name": "@graphql-mesh/cache-localforage",
-  "version": "0.7.7",
+  "version": "0.7.8",
   "sideEffects": false,
   "peerDependencies": {
     "graphql": "*"
   },
   "dependencies": {
-    "@graphql-mesh/types": "0.90.0",
-    "@graphql-mesh/utils": "0.43.7",
+    "@graphql-mesh/types": "0.91.0",
+    "@graphql-mesh/utils": "0.43.8",
     "localforage": "1.10.0",
     "tslib": "^2.4.0"
   },

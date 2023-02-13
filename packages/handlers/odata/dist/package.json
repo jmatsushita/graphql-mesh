@@ -1,16 +1,16 @@
 {
   "name": "@graphql-mesh/odata",
-  "version": "0.22.7",
+  "version": "0.22.8",
   "sideEffects": false,
   "peerDependencies": {
     "graphql": "*"
   },
   "dependencies": {
-    "@graphql-mesh/cross-helpers": "0.3.1",
-    "@graphql-mesh/store": "0.9.7",
+    "@graphql-mesh/cross-helpers": "0.3.2",
+    "@graphql-mesh/store": "0.9.8",
     "@graphql-mesh/string-interpolation": "0.4.2",
-    "@graphql-mesh/types": "0.90.0",
-    "@graphql-mesh/utils": "0.43.7",
+    "@graphql-mesh/types": "0.91.0",
+    "@graphql-mesh/utils": "0.43.8",
     "@graphql-tools/delegate": "9.0.26",
     "@graphql-tools/utils": "9.2.1",
     "@whatwg-node/fetch": "^0.8.0",
