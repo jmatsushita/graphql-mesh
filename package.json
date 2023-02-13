@@ -42,6 +42,9 @@
     "test": "cross-env \"JEST=1\" jest --forceExit --no-watchman",
     "test-and-build": "yarn build && yarn test"
   },
+  "peerDependencies": {
+    "graphql": "16.6.0"
+  },
   "devDependencies": {
     "@ardatan/graphql-to-config-schema": "0.1.25",
     "@babel/core": "7.20.12",
@@ -78,6 +81,7 @@
   "resolutions": {
     "graphql": "16.6.0",
     "undici": "5.19.0",
+    "sqlite3": "5.1.4",
     "uuid": "7.0.3"
   },
   "lint-staged": {
