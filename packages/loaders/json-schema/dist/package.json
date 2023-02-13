@@ -1,0 +1,58 @@
+{
+  "name": "@omnigraph/json-schema",
+  "version": "0.38.8",
+  "sideEffects": false,
+  "peerDependencies": {
+    "graphql": "*"
+  },
+  "dependencies": {
+    "@graphql-mesh/cross-helpers": "0.3.1",
+    "@graphql-mesh/string-interpolation": "0.4.2",
+    "@graphql-mesh/types": "0.90.0",
+    "@graphql-mesh/utils": "0.43.7",
+    "@graphql-tools/utils": "9.2.1",
+    "@json-schema-tools/meta-schema": "1.7.0",
+    "@whatwg-node/fetch": "^0.8.0",
+    "ajv": "8.12.0",
+    "ajv-formats": "2.1.1",
+    "graphql-compose": "9.0.10",
+    "graphql-scalars": "1.20.1",
+    "json-machete": "0.18.6",
+    "lodash.set": "4.3.2",
+    "pascal-case": "3.1.2",
+    "qs": "6.11.0",
+    "to-json-schema": "0.2.5",
+    "tslib": "^2.4.0",
+    "url-join": "4.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "Urigo/graphql-mesh",
+    "directory": "packages/loaders/json-schema"
+  },
+  "license": "MIT",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "typings": "typings/index.d.ts",
+  "typescript": {
+    "definition": "typings/index.d.ts"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "require": {
+        "types": "./typings/index.d.cts",
+        "default": "./cjs/index.js"
+      },
+      "import": {
+        "types": "./typings/index.d.ts",
+        "default": "./esm/index.js"
+      },
+      "default": {
+        "types": "./typings/index.d.ts",
+        "default": "./esm/index.js"
+      }
+    },
+    "./package.json": "./package.json"
+  }
+}

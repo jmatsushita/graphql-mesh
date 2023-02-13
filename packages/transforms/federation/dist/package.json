@@ -1,0 +1,50 @@
+{
+  "name": "@graphql-mesh/transform-federation",
+  "version": "0.10.8",
+  "sideEffects": false,
+  "peerDependencies": {
+    "graphql": "*"
+  },
+  "dependencies": {
+    "@apollo/subgraph": "2.3.2",
+    "@graphql-mesh/string-interpolation": "0.4.2",
+    "@graphql-mesh/types": "0.90.0",
+    "@graphql-mesh/utils": "0.43.7",
+    "@graphql-tools/delegate": "9.0.26",
+    "@graphql-tools/stitching-directives": "2.3.29",
+    "@graphql-tools/utils": "9.2.1",
+    "graphql-transform-federation": "2.2.0",
+    "lodash.set": "4.3.2",
+    "tslib": "^2.4.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "Urigo/graphql-mesh",
+    "directory": "packages/transforms/federation"
+  },
+  "license": "MIT",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "typings": "typings/index.d.ts",
+  "typescript": {
+    "definition": "typings/index.d.ts"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "require": {
+        "types": "./typings/index.d.cts",
+        "default": "./cjs/index.js"
+      },
+      "import": {
+        "types": "./typings/index.d.ts",
+        "default": "./esm/index.js"
+      },
+      "default": {
+        "types": "./typings/index.d.ts",
+        "default": "./esm/index.js"
+      }
+    },
+    "./package.json": "./package.json"
+  }
+}

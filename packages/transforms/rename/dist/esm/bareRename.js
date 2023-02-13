@@ -1,0 +1,121 @@
+import { defaultFieldResolver, } from 'graphql';
+import { renameType, MapperKind, mapSchema } from '@graphql-tools/utils';
+import { ignoreList } from './shared.js';
+// Resolver composer mapping renamed field and arguments
+const defaultResolverComposer = (resolveFn = defaultFieldResolver, originalFieldName, argsMap) => (root, args, context, info) => resolveFn(root, 
+// map renamed arguments to their original value
+argsMap
+    ? Object.keys(args).reduce((acc, key) => ({ ...acc, [argsMap[key] || key]: args[key] }), {})
+    : args, context, 
+// map renamed field name to its original value
+originalFieldName ? { ...info, fieldName: originalFieldName } : info);
+export default class BareRename {
+    constructor({ config }) {
+        this.noWrap = true;
+        this.typesMap = new Map();
+        this.fieldsMap = new Map();
+        this.argsMap = new Map();
+        for (const rename of config.renames) {
+            const { from: { type: fromTypeName, field: fromFieldName, argument: fromArgName }, to: { type: toTypeName, field: toFieldName, argument: toArgName }, useRegExpForTypes, useRegExpForFields, } = rename;
+            const regExpFlags = rename.regExpFlags || undefined;
+            if (fromTypeName &&
+                !fromFieldName &&
+                toTypeName &&
+                !toFieldName &&
+                fromTypeName !== toTypeName) {
+                this.typesMap.set(useRegExpForTypes ? new RegExp(fromTypeName, regExpFlags) : fromTypeName, toTypeName);
+            }
+            if (fromTypeName &&
+                fromFieldName &&
+                toTypeName &&
+                toFieldName &&
+                fromFieldName !== toFieldName) {
+                const fromName = useRegExpForFields
+                    ? new RegExp(fromFieldName, regExpFlags)
+                    : fromFieldName;
+                const typeMap = this.fieldsMap.get(fromTypeName) || new Map();
+                this.fieldsMap.set(fromTypeName, typeMap.set(fromName, toFieldName));
+            }
+            if (fromTypeName &&
+                fromFieldName &&
+                fromArgName &&
+                toTypeName &&
+                toFieldName &&
+                toArgName &&
+                fromArgName !== toArgName) {
+                const fromName = useRegExpForFields ? new RegExp(fromArgName, regExpFlags) : fromArgName;
+                const key = `${fromTypeName}.${fromFieldName}`;
+                const typeMap = this.argsMap.get(key) || new Map();
+                this.argsMap.set(key, typeMap.set(fromName, toArgName));
+            }
+        }
+    }
+    matchInMap(map, toMatch) {
+        const mapKeyIsString = map.has(toMatch);
+        const mapKey = mapKeyIsString
+            ? toMatch
+            : [...map.keys()].find(key => typeof key !== 'string' && key.test(toMatch));
+        if (!mapKey)
+            return null;
+        const newName = mapKeyIsString ? map.get(mapKey) : toMatch.replace(mapKey, map.get(mapKey));
+        // avoid re-iterating over strings that have already been renamed
+        if (mapKeyIsString)
+            map.delete(mapKey);
+        return newName;
+    }
+    renameType(type) {
+        const newTypeName = ignoreList.includes(type.toString())
+            ? null
+            : this.matchInMap(this.typesMap, type.toString());
+        return newTypeName ? renameType(type, newTypeName) : undefined;
+    }
+    transformSchema(schema) {
+        return mapSchema(schema, {
+            ...(this.typesMap.size && {
+                [MapperKind.TYPE]: type => this.renameType(type),
+                [MapperKind.ABSTRACT_TYPE]: type => {
+                    const currentName = type.toString();
+                    const newName = ignoreList.includes(currentName)
+                        ? null
+                        : this.matchInMap(this.typesMap, currentName);
+                    const existingResolver = type.resolveType;
+                    type.resolveType = async (data, context, info, abstractType) => {
+                        const originalResolvedTypename = await existingResolver(data, context, info, abstractType);
+                        const newTypename = ignoreList.includes(originalResolvedTypename)
+                            ? null
+                            : this.matchInMap(this.typesMap, originalResolvedTypename);
+                        return newTypename || originalResolvedTypename;
+                    };
+                    if (newName && newName !== currentName) {
+                        return renameType(type, newName);
+                    }
+                    return undefined;
+                },
+                [MapperKind.ROOT_OBJECT]: type => this.renameType(type),
+            }),
+            ...((this.fieldsMap.size || this.argsMap.size) && {
+                [MapperKind.COMPOSITE_FIELD]: (fieldConfig, fieldName, typeName) => {
+                    const typeRules = this.fieldsMap.get(typeName);
+                    const fieldRules = this.argsMap.get(`${typeName}.${fieldName}`);
+                    const newFieldName = typeRules && this.matchInMap(typeRules, fieldName);
+                    const argsMap = fieldRules &&
+                        Array.from(fieldRules.entries()).reduce((acc, [orName, newName]) => ({ ...acc, [newName]: orName }), {});
+                    if (!newFieldName && !fieldRules)
+                        return undefined;
+                    // Rename rules for type might have been emptied by matchInMap, in which case we can cleanup
+                    if (!(typeRules === null || typeRules === void 0 ? void 0 : typeRules.size))
+                        this.fieldsMap.delete(typeName);
+                    if (fieldRules && fieldConfig.args) {
+                        fieldConfig.args = Object.entries(fieldConfig.args).reduce((args, [argName, argConfig]) => ({
+                            ...args,
+                            [this.matchInMap(fieldRules, argName) || argName]: argConfig,
+                        }), {});
+                    }
+                    // Wrap resolve fn to handle mapping renamed field name and/or renamed arguments
+                    fieldConfig.resolve = defaultResolverComposer(fieldConfig.resolve, fieldName, argsMap);
+                    return [newFieldName || fieldName, fieldConfig];
+                },
+            }),
+        });
+    }
+}

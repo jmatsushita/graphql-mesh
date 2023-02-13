@@ -1,0 +1,44 @@
+{
+  "name": "@graphql-mesh/tuql",
+  "version": "0.8.6",
+  "sideEffects": false,
+  "peerDependencies": {
+    "graphql": "16.6.0"
+  },
+  "dependencies": {
+    "@graphql-mesh/cross-helpers": "0.3.1",
+    "@graphql-mesh/types": "0.90.0",
+    "tslib": "^2.4.0",
+    "tuql": "1.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "Urigo/graphql-mesh",
+    "directory": "packages/handlers/tuql"
+  },
+  "license": "MIT",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "typings": "typings/index.d.ts",
+  "typescript": {
+    "definition": "typings/index.d.ts"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "require": {
+        "types": "./typings/index.d.cts",
+        "default": "./cjs/index.js"
+      },
+      "import": {
+        "types": "./typings/index.d.ts",
+        "default": "./esm/index.js"
+      },
+      "default": {
+        "types": "./typings/index.d.ts",
+        "default": "./esm/index.js"
+      }
+    },
+    "./package.json": "./package.json"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "name": "@graphql-mesh/config",
+  "version": "10.1.0",
+  "sideEffects": false,
+  "peerDependencies": {
+    "@graphql-mesh/runtime": "^0.46.7",
+    "graphql": "*"
+  },
+  "dependencies": {
+    "@envelop/core": "3.0.4",
+    "@graphql-mesh/cache-localforage": "0.7.7",
+    "@graphql-mesh/cross-helpers": "0.3.1",
+    "@graphql-mesh/merger-bare": "0.16.9",
+    "@graphql-mesh/merger-stitching": "0.18.9",
+    "@graphql-mesh/store": "0.9.7",
+    "@graphql-mesh/types": "0.90.0",
+    "@graphql-mesh/utils": "0.43.7",
+    "@graphql-tools/code-file-loader": "7.3.20",
+    "@graphql-tools/graphql-file-loader": "7.5.16",
+    "@graphql-tools/load": "7.8.12",
+    "@graphql-tools/utils": "9.2.1",
+    "@whatwg-node/fetch": "^0.8.0",
+    "camel-case": "4.1.2",
+    "param-case": "3.0.4",
+    "pascal-case": "3.1.2",
+    "tslib": "^2.4.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "Urigo/graphql-mesh",
+    "directory": "packages/config"
+  },
+  "license": "MIT",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "typings": "typings/index.d.ts",
+  "typescript": {
+    "definition": "typings/index.d.ts"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "require": {
+        "types": "./typings/index.d.cts",
+        "default": "./cjs/index.js"
+      },
+      "import": {
+        "types": "./typings/index.d.ts",
+        "default": "./esm/index.js"
+      },
+      "default": {
+        "types": "./typings/index.d.ts",
+        "default": "./esm/index.js"
+      }
+    },
+    "./package.json": "./package.json"
+  }
+}
